@@ -17,8 +17,9 @@ export async function registerRoutes(
     const genre = req.query.genre as string | undefined;
     const search = req.query.search as string | undefined;
     const featured = req.query.featured === 'true';
+    const type = req.query.type as string | undefined;
     
-    const movies = await storage.getMovies({ genre, search, featured: featured ? true : undefined });
+    const movies = await storage.getMovies({ genre, search, featured: featured ? true : undefined, type });
     res.json(movies);
   });
 
@@ -75,7 +76,11 @@ async function seedDatabase() {
         releaseYear: 2016,
         rating: "TV-14",
         duration: "4 Seasons",
-        featured: true
+        featured: true,
+        type: "tv",
+        cast: ["Millie Bobby Brown", "Finn Wolfhard", "Winona Ryder"],
+        director: "The Duffer Brothers",
+        maturityRating: "Teens"
       },
       {
         title: "The Crown",
@@ -86,7 +91,11 @@ async function seedDatabase() {
         releaseYear: 2016,
         rating: "TV-MA",
         duration: "6 Seasons",
-        featured: false
+        featured: false,
+        type: "tv",
+        cast: ["Claire Foy", "Olivia Colman", "Imelda Staunton"],
+        director: "Stephen Daldry",
+        maturityRating: "Adults"
       },
       {
         title: "Inception",
@@ -97,7 +106,11 @@ async function seedDatabase() {
         releaseYear: 2010,
         rating: "PG-13",
         duration: "2h 28m",
-        featured: false
+        featured: false,
+        type: "movie",
+        cast: ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Elliot Page"],
+        director: "Christopher Nolan",
+        maturityRating: "Teens"
       },
       {
         title: "The Office",
@@ -108,7 +121,11 @@ async function seedDatabase() {
         releaseYear: 2005,
         rating: "TV-14",
         duration: "9 Seasons",
-        featured: false
+        featured: false,
+        type: "tv",
+        cast: ["Steve Carell", "Rainn Wilson", "John Krasinski"],
+        director: "Greg Daniels",
+        maturityRating: "Teens"
       },
       {
         title: "Interstellar",
@@ -119,7 +136,11 @@ async function seedDatabase() {
         releaseYear: 2014,
         rating: "PG-13",
         duration: "2h 49m",
-        featured: false
+        featured: false,
+        type: "movie",
+        cast: ["Matthew McConaughey", "Anne Hathaway", "Jessica Chastain"],
+        director: "Christopher Nolan",
+        maturityRating: "Teens"
       }
     ];
 

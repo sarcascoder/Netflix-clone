@@ -14,7 +14,7 @@ import { eq, and } from "drizzle-orm";
 
 export interface IStorage {
   // Movies
-  getMovies(params?: { search?: string; genre?: string; featured?: boolean }): Promise<Movie[]>;
+  getMovies(params?: { search?: string; genre?: string; featured?: boolean; type?: string }): Promise<Movie[]>;
   getMovie(id: number): Promise<Movie | undefined>;
   createMovie(movie: InsertMovie): Promise<Movie>;
   
@@ -30,7 +30,7 @@ export interface IStorage {
 }
 
 export class DatabaseStorage implements IStorage {
-  async getMovies(params?: { search?: string; genre?: string; featured?: boolean }): Promise<Movie[]> {
+  async getMovies(params?: { search?: string; genre?: string; featured?: boolean; type?: string }): Promise<Movie[]> {
     let query = db.select().from(movies);
     
     // Simple in-memory filtering logic for now if we don't build complex dynamic queries
@@ -38,6 +38,7 @@ export class DatabaseStorage implements IStorage {
     const conditions = [];
     if (params?.genre) conditions.push(eq(movies.genre, params.genre));
     if (params?.featured !== undefined) conditions.push(eq(movies.featured, params.featured));
+    if (params?.type) conditions.push(eq(movies.type, params.type));
     
     // Search would use ilike, but let's just return all and filter if needed or implement properly
     if (conditions.length > 0) {

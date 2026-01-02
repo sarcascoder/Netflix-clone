@@ -13,6 +13,10 @@ export const movies = pgTable("movies", {
   rating: text("rating").notNull(), // e.g. "PG-13", "TV-MA"
   duration: text("duration").notNull(), // e.g. "1h 45m"
   featured: boolean("featured").default(false),
+  cast: text("cast").array(),
+  director: text("director"),
+  maturityRating: text("maturity_rating"), // e.g. "Adults", "Teens"
+  type: text("type").notNull().default("movie"), // "movie" or "tv"
 });
 
 export const myList = pgTable("my_list", {
