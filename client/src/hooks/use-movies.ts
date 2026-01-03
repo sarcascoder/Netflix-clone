@@ -4,7 +4,7 @@ import { useToast } from "@/hooks/use-toast";
 import { type Movie, type MyListItem } from "@shared/schema";
 
 // GET /api/movies (Optional filtering)
-export function useMovies(filters?: { search?: string; genre?: string; featured?: boolean }) {
+export function useMovies(filters?: { search?: string; genre?: string; featured?: boolean; type?: string }) {
   return useQuery({
     queryKey: [api.movies.list.path, filters],
     queryFn: async () => {
@@ -13,6 +13,7 @@ export function useMovies(filters?: { search?: string; genre?: string; featured?
       if (filters?.search) url.searchParams.append("search", filters.search);
       if (filters?.genre) url.searchParams.append("genre", filters.genre);
       if (filters?.featured !== undefined) url.searchParams.append("featured", String(filters.featured));
+      if (filters?.type) url.searchParams.append("type", filters.type);
 
       const res = await fetch(url.toString(), { credentials: "include" });
       if (!res.ok) throw new Error("Failed to fetch movies");
